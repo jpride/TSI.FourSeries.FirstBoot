@@ -51,9 +51,8 @@ namespace TSI.FourSeries.FirstBoot
                     //Write default string to file
                     FileOperations.WriteFile(_filelocation, jsonTemplate);
 
-                    //Read file
-                    _filecontents = FileOperations.ReadFile(_filelocation);
-
+                    //Bypass having to read the file and just set _filecontents to what we just wrote to file
+                    _filecontents = jsonTemplate;
                 }
                 catch (Exception ex)
                 {
@@ -97,7 +96,7 @@ namespace TSI.FourSeries.FirstBoot
         /// <summary>
         /// Write the new bootrecord to file
         /// </summary>
-        public void WriteBootRecordToFile()
+        private void WriteBootRecordToFile()
         {
             var UpdatedJson = JsonConvert.SerializeObject(_bootRecord);
             FileOperations.WriteFile(_filelocation, UpdatedJson);

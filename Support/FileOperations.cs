@@ -1,11 +1,10 @@
-﻿namespace TSI.FourSeries.FirstBoot
+﻿using System;
+using System.Text;
+using Crestron.SimplSharp;
+using Crestron.SimplSharp.CrestronIO;
+
+namespace TSI.FourSeries.FirstBoot
 {
-    using System;
-    using System.Text;
-    using Crestron.SimplSharp;
-    using Crestron.SimplSharp.CrestronIO;
-
-
     public class FileOperations
     {
         private static CCriticalSection _fileLock = new CCriticalSection();
@@ -21,12 +20,10 @@
                 if (File.Exists(filePath))
                 {
                     fileExists = true;
-                    return true;
                 }
-                else
-                {
-                    return false;
-                }
+
+                return fileExists;
+
             }
             finally
             {
@@ -41,7 +38,7 @@
             try
             {
                 _fileLock.Enter();
-                if (File.Exists(filePath))
+                if (CheckFileExists(filePath))
                 {
                     fileContents = File.ReadToEnd(filePath, Encoding.ASCII);
                     return fileContents;
